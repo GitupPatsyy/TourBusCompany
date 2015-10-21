@@ -19,9 +19,11 @@ public class TourBusMassacre_CA1 {
     }
 
     public static void main(String[] args) {
-
+        
+        
+        Model model = Model.getInstance();
         Scanner in = new Scanner(System.in);
-
+        //Allow Switching of Menu
         int menuOpt;
         //Allowing user to run the do loop while the menuOpt isnt 5
         do {
@@ -29,7 +31,8 @@ public class TourBusMassacre_CA1 {
             s("2 - View the Bus list");
             s("3 - Update Bus list");
             s("4 - Delete from Bus list");
-            s("5 - Exit\n");
+            s("5 - Print Bus at Index0");
+            s("6 - Exit\n");
             
             s("What would you like to do?");
             menuOpt = in.nextInt();
@@ -52,6 +55,9 @@ public class TourBusMassacre_CA1 {
                     s("Deleting bus from list...\n");
                 }
                 case 5: {
+                    s(model.getBuses().get(0));//Prints out HardCoded Bus from Model
+                }
+                case 6: {
                     s("Exiting....");
                     break;
                 }
