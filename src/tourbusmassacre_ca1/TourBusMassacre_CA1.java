@@ -23,16 +23,17 @@ public class TourBusMassacre_CA1 {
         
         Model model = Model.getInstance();
         Scanner in = new Scanner(System.in);
-        //Allow Switching of Menu
-        int menuOpt;
-        //Allowing user to run the do loop while the menuOpt isnt 5
-        do {
+        
+        int menuOpt; //Allow changing of menu using numbers
+        
+        do { //Allowing user to run the do loop while the menuOpt isnt 5
             s("1 - Create Bus");
             s("2 - View the Bus list");
             s("3 - Update Bus list");
             s("4 - Delete from Bus list");
             s("5 - Print Bus at Index0");
-            s("6 - Exit\n");
+            s("6 - Print Bus at Index1");
+            s("7 - Exit\n");
             
             s("What would you like to do?");
             menuOpt = in.nextInt();
@@ -58,12 +59,15 @@ public class TourBusMassacre_CA1 {
                     s(model.getBuses().get(0));//Prints out HardCoded Bus from Model
                 }
                 case 6: {
+                    s(model.getBuses().get(1));//Prints out HardCoded Bus from Model
+                }
+                case 7: {
                     s("Exiting....");
                     break;
                 }
             }
           //Ends the loop when 5 is selected
-        } while (menuOpt != 5);
+        } while (menuOpt != 7);
     }
 
 }
