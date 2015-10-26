@@ -14,44 +14,53 @@ import java.util.List;
  */
 public class Model {
 
-    private static Model instance = null;
+    private static Model instance = null; //Set instance value
 
-    public static synchronized Model getInstance() {
+    public static synchronized Model getInstance() //Creates instance for the Bus Object
+    {
         if (instance == null) {
-            instance = new Model();
+            instance = new Model();//Creates a new instance because "instance = null"
         }
         return instance;
     }
     
-    private List<Buses> buses;
-    private Model(){
+    private List<Buses> buses; //Creates private array buses from Buses class
+    private Model()
+    {
         //Array List for Buses
         this.buses = new ArrayList<Buses>();
         //Adding a Bus for Hardcode Test
         this.buses.add(new Buses("07TN9999", "Mercedes", "Vito", 2.5, "14/01/2015", "22/12/2015"));
+        
+        this.buses.add(new Buses("141D1234", "Ford", "Bus", 2.2, "01/05/2014", "01/04/2016"));
     }
         
-        public List<Buses> getBuses()
+        public List<Buses> getBuses() //Gets buses from Buses Class
         {
             return new ArrayList<Buses>(this.buses);
         }
         //Method to Add Bus to List
-        public void addBus(Buses b){
+        public void addBus(Buses b)
+        {
             this.buses.add(b);
         }
-        public Buses findBusByReg(String regNum){
+        
+        public Buses findBusByReg(String regNum){ //Method to find a Bus by RegNum
             Buses b = null;
             int i =0;
             boolean found = false;
-            while (i < this.buses.size() && !found) {                
+            while (i < this.buses.size() && !found) 
+            {                
                 b = this.buses.get(i);
-                if (b.getRegNum() == regNum) {
+                if (b.getRegNum() == regNum) 
+                {
                     found = true;
                 } else {
                     i++;
                 }
             }
-            if(!found){
+            if(!found) 
+            {
                 b = null;
             }
             return b;
