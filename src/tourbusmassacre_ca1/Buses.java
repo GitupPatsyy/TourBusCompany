@@ -21,7 +21,7 @@ public class Buses {
     public Buses(){
         
     }
-    
+    //Constructor with all the parameters that make up the Object
     public Buses(String regNum, String busMake, String busModel, double engSize, String dateBought, String nextService){
         this.regNum = regNum;
         this.busMake = busMake;
