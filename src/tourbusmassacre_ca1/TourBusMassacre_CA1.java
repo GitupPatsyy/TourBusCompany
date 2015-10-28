@@ -5,6 +5,7 @@
  */
 package tourbusmassacre_ca1;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -12,29 +13,28 @@ import java.util.Scanner;
  * @author rorypb
  */
 public class TourBusMassacre_CA1 {
-    
+
     //Method for println
     public static void s(Object s) {
-        System.out.println(s);
+        System.out.println(s);//This is a simple method for system print outs
     }
 
     public static void main(String[] args) {
-        
-        
+
+        Buses b;
+
         Model model = Model.getInstance();
         Scanner in = new Scanner(System.in);
-        
+
         int menuOpt; //Allow changing of menu using numbers
-        
+
         do { //Allowing user to run the do loop while the menuOpt isnt 5
             s("1 - Create Bus");
             s("2 - View the Bus list");
             s("3 - Update Bus list");
             s("4 - Delete from Bus list");
-            s("5 - Print Bus at Index0");
-            s("6 - Print Bus at Index1");
-            s("7 - Exit\n");
-            
+            s("5 - Exit\n");
+
             s("What would you like to do?");
             menuOpt = in.nextInt();
 
@@ -43,10 +43,13 @@ public class TourBusMassacre_CA1 {
             switch (menuOpt) {
                 case 1: {
                     s("Creating bus...\n");
+                    b = readBuses(in);
+                    model.addBus(b);
                     break;
                 }
                 case 2: {
                     s("Viewing bus...\n");
+                    viewBus(model);
                     break;
                 }
                 case 3: {
@@ -56,18 +59,53 @@ public class TourBusMassacre_CA1 {
                     s("Deleting bus from list...\n");
                 }
                 case 5: {
-                    s(model.getBuses().get(0));//Prints out HardCoded Bus from Model
-                }
-                case 6: {
-                    s(model.getBuses().get(1));//Prints out HardCoded Bus from Model
-                }
-                case 7: {
                     s("Exiting....");
                     break;
                 }
             }
-          //Ends the loop when 5 is selected
-        } while (menuOpt != 7);
+            //Ends the loop when 5 is selected
+        } while (menuOpt != 5);
     }
+
+    private static Buses readBuses(Scanner in) {//Creating a bus in the main method
+        String regNum, busMake, busModel, dateBought, nextService; //needs a string of reg, make, model datebought and next service
+        double engineSize; //Engine size needed
+        
+        s("Enter registration number (00D12345): ");
+        regNum = in.next();
+        
+        s("Enter bus make: ");
+        busMake = in.next();
+        
+        s("Enter bus model: ");
+        busModel = in.next();
+        
+        s("Enter date bought: ");
+        dateBought = in.next();
+        
+        s("Enter date for next service: ");
+        nextService = in.next();
+        
+        s("Enter engine size: ");
+        engineSize = in.nextDouble();
+
+       
+
+        Buses b = new Buses(regNum, busMake, busModel, dateBought, nextService, engineSize);
+        return b;
+    }
+
+    private static void viewBus(Model model) {//Creates method to view bus
+
+        List<Buses> buses = model.getBuses();//Lists the buses in the array
+        buses.stream().map((bs) -> {
+            //for each loop
+            s("Bus Make: " + bs.toString() + "\n");//RIGHT NOW prints out busmake will change
+            return bs;
+        }).forEach((_item) -> {
+            s("================================================================");
+        });
+    }
+
 
 }

@@ -31,6 +31,10 @@ public class Buses {
         this.nextService = nextService;
     }
 
+    Buses(String regNum, String busMake, String busModel, String dateBought, String nextService, double engineSize) {
+        
+    }
+
     /**
      * @return the regNum
      */
