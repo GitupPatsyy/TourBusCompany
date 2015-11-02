@@ -45,8 +45,12 @@ public class Model {
             this.buses.add(b);
         }
         
+        public boolean removeBus(Buses b) {
+            return this.buses.remove(b);
+        }
+        
         public Buses findBusByReg(String regNum){ //Method to find a Bus by RegNum
-            Buses b = null;
+            Buses b = new Buses();
             int i =0;
             boolean found = false;
             while (i < this.buses.size() && !found) 
