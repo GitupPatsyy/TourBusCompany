@@ -70,7 +70,11 @@ public class TourBusMassacre_CA1 {
 
     private static Buses readBuses(Scanner in) {//Creating a bus in the main method
         String regNum, busMake, busModel, dateBought, nextService; //needs a string of reg, make, model datebought and next service
+        int busID;
         double engineSize; //Engine size needed
+        
+        s("Enter the Bus ID");
+        busID = in.nextInt();
 
         s("Enter registration number (00D12345): ");
         regNum = in.next();
@@ -90,7 +94,7 @@ public class TourBusMassacre_CA1 {
         s("Enter engine size: ");
         engineSize = in.nextDouble();
 
-        Buses b = new Buses(regNum, busMake, busModel, engineSize, dateBought, nextService);
+        Buses b = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService);
         return b;
     }
 
@@ -105,13 +109,13 @@ public class TourBusMassacre_CA1 {
     }
 
     private static void deleteBus(Scanner in, Model m) {
-        s("Enter the Registration number of the Bus to delete: ");
-        String regNum = in.next(); //Search for Bus to delete
-
+        s("Enter the BusID of the bus you would like to delete: ");
+        int busID = in.nextInt(); //Search for Bus to delete
+       
         Buses b;
 
-        b = m.findBusByReg(regNum);
-        if (b != null) {
+        b = m.findBusByID(busID);
+        if (b != null ) {
             if (m.removeBus(b)) {
                 s("Bus removed");
                 s("================================================================\n");

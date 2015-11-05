@@ -10,19 +10,23 @@ package tourbusmassacre_ca1;
  * @author rorypb
  */
 public class Buses {
+    private int busID;
     private String regNum;
     private String busMake;
     private String busModel;
     private double engSize;
     private String dateBought;
     private String nextService;
-    
+
+
    //Default Constructor
     public Buses(){
         
     }
     //Constructor with all the parameters that make up the Object
-    public Buses(String regNum, String busMake, String busModel, double engSize, String dateBought, String nextService){
+    public Buses(int busID, String regNum, String busMake, String busModel, double engSize, String dateBought, String nextService){
+        
+        this.busID = busID;
         this.regNum = regNum;
         this.busMake = busMake;
         this.busModel = busModel;
@@ -31,6 +35,19 @@ public class Buses {
         this.nextService = nextService;
     }
 
+        /**
+     * @return the busID
+     */
+    public int getBusID() {
+        return busID;
+    }
+
+    /**
+     * @param busID the busID to set
+     */
+    public void setBusID(int busID) {
+        this.busID = busID;
+    }
     
 
     /**
@@ -118,7 +135,8 @@ public class Buses {
     }
     
     public String toString(){
-        return "Registration Number: " + regNum+
+        return  "BusID: " + busID +
+                "\nRegistration Number: " + regNum +
                 "\nBus Make: " + busMake +
                 "\nBus Model: " + busModel +
                 "\nEngine Size: " + engSize +
