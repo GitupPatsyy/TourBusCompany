@@ -5,8 +5,13 @@
  */
 package tourbusmassacre_ca1;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,8 +24,8 @@ public class TourBusMassacre_CA1 {
         System.out.println(s);//This is a simple method for system print outs
     }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args){ //Main Method
+        
         Buses b;
 
         Model model = Model.getInstance();
@@ -44,12 +49,12 @@ public class TourBusMassacre_CA1 {
                 case 1: {
                     s("Creating bus...\n");
                     b = readBuses(in);
-                    model.addBus(b);
+                    model.addBus(b);//uses the add bus method to add bus to the arraylist
                     break;
                 }
                 case 2: {
                     s("Viewing bus...\n");
-                    viewBus(model);
+                    viewBus(model); //views the whole bus list
                     break;
                 }
                 case 3: {
@@ -57,10 +62,10 @@ public class TourBusMassacre_CA1 {
                 }
                 case 4: {
                     s("Deleting bus from list...\n");
-                    deleteBus(in, model);
+                    deleteBus(in, model); //uses the delete method to delete a bus using the BusID
                 }
                 case 5: {
-                    s("Exiting....");
+                    s("Exiting....\n");
                     break;
                 }
             }
@@ -70,7 +75,7 @@ public class TourBusMassacre_CA1 {
 
     private static Buses readBuses(Scanner in) {//Creating a bus in the main method
         String regNum, busMake, busModel, dateBought, nextService; //needs a string of reg, make, model datebought and next service
-        int busID;
+        int busID;//BusID added for ease of deletion(hopefully)
         double engineSize; //Engine size needed
         
         s("Enter the Bus ID");
@@ -94,23 +99,23 @@ public class TourBusMassacre_CA1 {
         s("Enter engine size: ");
         engineSize = in.nextDouble();
 
-        Buses b = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService);
+        Buses b = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService);//Adds bus to ArrayList
         return b;
     }
 
     private static void viewBus(Model model) {
 //Creates method to view bus
-        List<Buses> bus = model.getBuses();
+        List<Buses> bus = model.getBuses();//Lists buses in the arrary
         for (Buses bs : bus) {
             //for each loop
-            s("Bus Make: " + bs.toString() + "\n");//RIGHT NOW prints out busmake will change
+            s("Bus ID: " + bs.getBusID() + "\n");//RIGHT NOW prints out my toString method which is all the bus information that the user enters
             s("================================================================");
         }
     }
 
     private static void deleteBus(Scanner in, Model m) {
         s("Enter the BusID of the bus you would like to delete: ");
-        int busID = in.nextInt(); //Search for Bus to delete
+        int busID = Integer.parseInt(in.next()); //Search for Bus to delete
        
         Buses b;
 
