@@ -21,6 +21,9 @@ public class DatabaseConnection {
     //private static final String DATABASE = "daneel"; for college upload
     //private static final String USERNAME = "N00143233";
     //private static final String PASSWORD = "N00143233";
+    //private static final String CONN_STRING =
+    //          "jdbc:mysql://daneel/N00143233";
+
     private static final String USERNAME = "rorypb";
     private static final String PASSWORD = "root";
     private static final String CONN_STRING =

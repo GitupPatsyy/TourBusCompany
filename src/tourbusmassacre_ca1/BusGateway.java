@@ -75,11 +75,11 @@ public class BusGateway {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             success = false;
-        } finally {
+        } finally { //close keys
             if(keys != null){
                 keys.close();
             }
-            if(stmt != null){
+            if(stmt != null){ //close statement
                 stmt.close();
 
             }

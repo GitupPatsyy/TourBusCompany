@@ -26,9 +26,9 @@ public class Buses {
     }
 
     //Constructor with all the parameters that make up the Object
-    public Buses(int busID, String regNum, String busMake, String busModel, double engSize, Date dateBought, Date nextService) {
+    public Buses(String regNum, String busMake, String busModel, double engSize, Date dateBought, Date nextService) {
 
-        this.busID = busID;
+        //this.busID = busID;
         this.regNum = regNum;
         this.busMake = busMake;
         this.busModel = busModel;
@@ -48,7 +48,7 @@ public class Buses {
      * @param busID the busID to set
      */
     public void setBusID(int busID) {
-        this.busID = busID;
+        this.busID = busID; //setting as auto key in BusGateway
     }
 
 

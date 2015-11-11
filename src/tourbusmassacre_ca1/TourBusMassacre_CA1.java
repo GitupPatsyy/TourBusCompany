@@ -37,11 +37,13 @@ public class TourBusMassacre_CA1 {
         int menuOpt; //Allow changing of menu using numbers
 
         do { //Allowing user to run the do loop while the menuOpt isnt 5
-            s("1 - Create Bus");
-            s("2 - View the Bus list");
-            s("3 - Update Bus list");
-            s("4 - Delete from Bus list");
-            s("5 - Exit\n");
+            s("---------------------------------");
+            s("|\t1 - Create Bus\t\t\t\t|");
+            s("|\t2 - View the Bus list'\t\t|");
+            s("|\t3 - Update Bus list\t\t\t|");
+            s("|\t4 - Delete from Bus list\t|");
+            s("|\t5 - Exit\t\t\t\t\t|\n");
+            s("---------------------------------");
 
             s("What would you like to do?");
             menuOpt = in.nextInt();
@@ -86,12 +88,10 @@ public class TourBusMassacre_CA1 {
 
     private static Buses readBuses(Scanner in) {//Creating a bus in the main method
         String regNum, busMake, busModel; //needs a string of reg, make, model datebought and next service
-        int busID;//BusID added for ease of deletion(hopefully)
+        //int busID;//BusID added for ease of deletion(hopefully)
         double engineSize; //Engine size needed
         Date dateBought = null, nextService = null;
 
-        s("Enter the Bus ID");
-        busID = in.nextInt();
 
         s("Enter registration number (00D12345): ");
         regNum = in.next();
@@ -102,14 +102,14 @@ public class TourBusMassacre_CA1 {
         s("Enter bus model: ");
         busModel = in.next();
 
-        s("Enter date bought (DD/MM/YYYY) : ");
+        s("Enter date bought (yyyy/MM/dd) : ");
         String boughtDate = in.next();
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd1");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
             dateBought = df.parse(boughtDate);
 
 
-            s("Enter date for next service (DD/MM/YYYY) : ");
+            s("Enter date for next service (yyyy-MM-dd) : ");
             String serviceNext = in.next();
             nextService = df.parse(serviceNext);
 
@@ -121,8 +121,9 @@ public class TourBusMassacre_CA1 {
 
         s("Enter engine size: ");
         engineSize = in.nextDouble();
+        s("\n");
 
-        Buses b = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService);//Adds bus to ArrayList
+        Buses b = new Buses(regNum, busMake, busModel, engineSize, dateBought, nextService);//Adds bus to ArrayList
         return b;
     }
 
