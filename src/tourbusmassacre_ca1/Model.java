@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * @author rorypb
  */
 public class Model {
@@ -30,9 +29,9 @@ public class Model {
         //Array List for Buses
         this.buses = new ArrayList<Buses>();
         //Adding a Bus for Hardcode Test
-        this.buses.add(new Buses(1, "07TN9999", "Mercedes", "Vito", 2.5, "14/01/2015", "22/12/2015"));
+        //this.buses.add(new Buses(1, "07TN9999", "Mercedes", "Vito", 2.5, "14/01/2015", "22/12/2015"));
 
-        this.buses.add(new Buses(2, "141D1234", "Ford", "Bus", 2.2, "01/05/2014", "01/04/2016"));
+        //this.buses.add(new Buses(2, "141D1234", "Ford", "Bus", 2.2, "01/05/2014", "01/04/2016"));
     }
 
     public List<Buses> getBuses() //Gets buses from Buses Class
@@ -49,6 +48,10 @@ public class Model {
     public boolean removeBus(Buses b) {
         return this.buses.remove(b);
     }
+
+//    public Buses updateBus(Buses b){
+//        return this.buses.set(b);
+//    }
 
     public Buses findBusByID(int BusID) { //Method to find a Bus by BusID
         Buses b = new Buses(); //creating a new bus

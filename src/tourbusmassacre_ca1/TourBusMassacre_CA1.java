@@ -8,13 +8,16 @@ package tourbusmassacre_ca1;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author rorypb
  */
 public class TourBusMassacre_CA1 {
@@ -24,8 +27,8 @@ public class TourBusMassacre_CA1 {
         System.out.println(s);//This is a simple method for system print outs
     }
 
-    public static void main(String[] args){ //Main Method
-        
+    public static void main(String[] args) { //Main Method
+
         Buses b;
 
         Model model = Model.getInstance();
@@ -50,6 +53,12 @@ public class TourBusMassacre_CA1 {
                     s("Creating bus...\n");
                     b = readBuses(in);
                     model.addBus(b);//uses the add bus method to add bus to the arraylist
+                    BusGateway busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
+                    try {
+                        busGateway.insertBus(b);
+                    } catch (SQLException e) {
+
+                    }
                     break;
                 }
                 case 2: {
@@ -59,6 +68,8 @@ public class TourBusMassacre_CA1 {
                 }
                 case 3: {
                     s("Updating bus...\n");
+                    s("Please select the ID of the Bus to Update: ");
+
                 }
                 case 4: {
                     s("Deleting bus from list...\n");
@@ -74,10 +85,11 @@ public class TourBusMassacre_CA1 {
     }
 
     private static Buses readBuses(Scanner in) {//Creating a bus in the main method
-        String regNum, busMake, busModel, dateBought, nextService; //needs a string of reg, make, model datebought and next service
+        String regNum, busMake, busModel; //needs a string of reg, make, model datebought and next service
         int busID;//BusID added for ease of deletion(hopefully)
         double engineSize; //Engine size needed
-        
+        Date dateBought = null, nextService = null;
+
         s("Enter the Bus ID");
         busID = in.nextInt();
 
@@ -91,10 +103,21 @@ public class TourBusMassacre_CA1 {
         busModel = in.next();
 
         s("Enter date bought (DD/MM/YYYY) : ");
-        dateBought = in.next();
+        String boughtDate = in.next();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd1");
+        try {
+            dateBought = df.parse(boughtDate);
 
-        s("Enter date for next service (DD/MM/YYYY) : ");
-        nextService = in.next();
+
+            s("Enter date for next service (DD/MM/YYYY) : ");
+            String serviceNext = in.next();
+            nextService = df.parse(serviceNext);
+
+        } catch (ParseException e) {
+            //e.printStackTrace();
+            System.err.println("Invalid date format: "+ e.getMessage());
+            readBuses(in);
+        }
 
         s("Enter engine size: ");
         engineSize = in.nextDouble();
@@ -113,14 +136,29 @@ public class TourBusMassacre_CA1 {
         }
     }
 
+//    private static void updateBus(Scanner in, Model m){
+//        s("Enter the ID of the Bus you would like to Update: ");
+//        int busID = Integer.parseInt(in.nextInt());
+//
+//        Buses b;
+//
+//        b = m.findBusByID(busID);
+//        if(b != null) {
+//            if (m.updateBus(b)){
+//                Buses b = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService);
+//            }
+//        }
+//
+//    }
+
     private static void deleteBus(Scanner in, Model m) {
         s("Enter the BusID of the bus you would like to delete: ");
         int busID = Integer.parseInt(in.next()); //Search for Bus to delete
-       
+
         Buses b;
 
         b = m.findBusByID(busID);
-        if (b != null ) {
+        if (b != null) {
             if (m.removeBus(b)) {
                 s("Bus removed");
                 s("================================================================\n");
@@ -128,9 +166,9 @@ public class TourBusMassacre_CA1 {
                 s("Bus removal failed");
                 s("================================================================\n");
             }
-            } else {
-                s("Bus not found");
-                s("================================================================\n");
-            }
+        } else {
+            s("Bus not found");
+            s("================================================================\n");
+        }
     }
 }

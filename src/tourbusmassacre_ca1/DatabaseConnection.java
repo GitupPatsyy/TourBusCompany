@@ -5,7 +5,6 @@
  */
 package tourbusmassacre_ca1;
 
-import com.intellij.codeHighlighting.Pass;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,17 +12,19 @@ import java.sql.SQLException;
 
 
 /**
- *
  * @author rorypb
  */
 public class DatabaseConnection {
 
     //==================================
     //Connection to Database
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    //private static final String DATABASE = "daneel"; for college upload
+    //private static final String USERNAME = "N00143233";
+    //private static final String PASSWORD = "N00143233";
+    private static final String USERNAME = "rorypb";
+    private static final String PASSWORD = "root";
     private static final String CONN_STRING =
-            "jdbc:mysql://localhost/CA1-TourBusMassacre";
+            "jdbc:mysql://localhost:8889/CA1-TourBusMassacre";
 
 
     //==================================
@@ -31,13 +32,13 @@ public class DatabaseConnection {
     private static DatabaseConnection instance = null;
     private Connection dbConnection = null;
 
-    private DatabaseConnection () {//Default empty constructor
+    private DatabaseConnection() {//Default empty constructor
 
 
     }
 
     public static DatabaseConnection getInstance() {//Instantiating the connection
-        if(instance == null){ //Instance set to null
+        if (instance == null) { //Instance set to null
             instance = new DatabaseConnection(); //new DB connection from instance
 
         }
@@ -49,21 +50,22 @@ public class DatabaseConnection {
 
     private boolean openConnection() {//Open connection
         boolean connected = true;
-        try{
+        try { //when connection is open
             dbConnection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
+            System.out.println("CONNECTED");
 
-        } catch (SQLException e) {
+        } catch (SQLException e) { //when connection is not open
             connected = false;
-            System.err.println("Error no connection: " +  e.getMessage());
+            System.err.println("Error no connection: " + e.getMessage());
         }
         return connected;
 
     }
 
-    public Connection getDbConnection () {
+    public Connection getDbConnection() {
         Connection connection = null;
-        if(dbConnection == null){
-            if (openConnection()){
+        if (dbConnection == null) {
+            if (openConnection()) {
                 connection = dbConnection;
             }
         } else {
@@ -73,19 +75,16 @@ public class DatabaseConnection {
         return connection;
     }
 
-    public void closeConnection() {
-        try{
-            if (dbConnection != null){
+    public void closeConnection() { //close DB connection
+        try {
+            if (dbConnection != null) {
                 dbConnection.close();
-                dbConnection =  null;
+                dbConnection = null;
             }
-        } catch (SQLException e){
+        } catch (SQLException e) {
 
         }
     }
-
-
-
 
 
 }

@@ -5,8 +5,9 @@
  */
 package tourbusmassacre_ca1;
 
+import java.util.Date;
+
 /**
- *
  * @author rorypb
  */
 public class Buses {
@@ -15,17 +16,18 @@ public class Buses {
     private String busMake;
     private String busModel;
     private double engSize;
-    private String dateBought;
-    private String nextService;
+    private Date dateBought;
+    private Date nextService;
 
 
-   //Default Constructor
-    public Buses(){
-        
+    //Default Constructor
+    public Buses() {
+
     }
+
     //Constructor with all the parameters that make up the Object
-    public Buses(int busID, String regNum, String busMake, String busModel, double engSize, String dateBought, String nextService){
-        
+    public Buses(int busID, String regNum, String busMake, String busModel, double engSize, Date dateBought, Date nextService) {
+
         this.busID = busID;
         this.regNum = regNum;
         this.busMake = busMake;
@@ -35,7 +37,7 @@ public class Buses {
         this.nextService = nextService;
     }
 
-        /**
+    /**
      * @return the busID
      */
     public int getBusID() {
@@ -48,7 +50,7 @@ public class Buses {
     public void setBusID(int busID) {
         this.busID = busID;
     }
-    
+
 
     /**
      * @return the regNum
@@ -109,38 +111,38 @@ public class Buses {
     /**
      * @return the dateBought
      */
-    public String getDateBought() {
+    public Date getDateBought() {
         return dateBought;
     }
 
     /**
      * @param dateBought the dateBought to set
      */
-    public void setDateBought(String dateBought) {
+    public void setDateBought(Date dateBought) {
         this.dateBought = dateBought;
     }
 
     /**
      * @return the nextService
      */
-    public String getNextService() {
+    public Date getNextService() {
         return nextService;
     }
 
     /**
      * @param nextService the nextService to set
      */
-    public void setNextService(String nextService) {
+    public void setNextService(Date nextService) {
         this.nextService = nextService;
     }
-    
-    public String toString(){
-        return  "BusID: " + busID +
+
+    public String toString() {
+        return "BusID: " + busID +
                 "\nRegistration Number: " + regNum +
                 "\nBus Make: " + busMake +
                 "\nBus Model: " + busModel +
                 "\nEngine Size: " + engSize +
-                "\nDate Purchased: " + dateBought+
+                "\nDate Purchased: " + dateBought +
                 "\nNext Service: " + nextService;
     }
 }
