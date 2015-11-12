@@ -14,6 +14,7 @@ public class BusGateway {
     private static final String COLUMN_SIZE = "engineSize";
     private static final String COLUMN_BOUGHT = "dateBought";
     private static final String COLUMN_SERVICE = "dateNextService";
+//    private static final String COLUMN_GARAGE = "garageID";
 
     private Connection gConnection;
 
@@ -22,6 +23,7 @@ public class BusGateway {
     }
 
     //Inserting the bus into your DB table
+    //empty bus obect for when entering in values
     public boolean insertBus(Buses bus) throws SQLException {
 
         boolean success = true;
@@ -55,7 +57,7 @@ public class BusGateway {
             stmt.setDouble(4, bus.getEngSize());
             stmt.setDate(5, new Date(bus.getDateBought().getTime())); //Java date format needs to Changed to the same format as SQL
             stmt.setDate(6, new Date(bus.getNextService().getTime()));
-
+//            stmt.setInt(7, bus.getGarageID());
 
             numRowsAffected = stmt.executeUpdate();//Update the table
 

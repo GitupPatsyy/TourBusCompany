@@ -89,6 +89,7 @@ public class TourBusMassacre_CA1 {
     private static Buses readBuses(Scanner in) {//Creating a bus in the main method
         String regNum, busMake, busModel; //needs a string of reg, make, model datebought and next service
         //int busID;//BusID added for ease of deletion(hopefully)
+//        int garageID;
         double engineSize; //Engine size needed
         Date dateBought = null, nextService = null;
 
@@ -121,7 +122,11 @@ public class TourBusMassacre_CA1 {
 
         s("Enter engine size: ");
         engineSize = in.nextDouble();
-        s("\n");
+
+
+//        s("Enter the Garage ID the Bus is based: ");
+//        garageID = in.nextInt();
+//        s("\n");
 
         Buses b = new Buses(regNum, busMake, busModel, engineSize, dateBought, nextService);//Adds bus to ArrayList
         return b;

@@ -18,6 +18,7 @@ public class Buses {
     private double engSize;
     private Date dateBought;
     private Date nextService;
+//    private int garageID;
 
 
     //Default Constructor
@@ -36,6 +37,15 @@ public class Buses {
         this.dateBought = dateBought;
         this.nextService = nextService;
     }
+
+
+//    public int getGarageID() {
+//        return garageID;
+//    }
+//
+//    public void setGarageID(int garageID) {
+//        this.garageID = garageID;
+//    }
 
     /**
      * @return the busID
@@ -145,5 +155,7 @@ public class Buses {
                 "\nDate Purchased: " + dateBought +
                 "\nNext Service: " + nextService;
     }
+
+
 }
 
