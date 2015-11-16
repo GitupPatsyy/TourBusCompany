@@ -29,7 +29,7 @@ public class TourBusMassacre_CA1 {
 
     public static void main(String[] args) { //Main Method
 
-        Buses b;
+        Buses b = null;
 
         Model model = Model.getInstance();
         Scanner in = new Scanner(System.in);
@@ -75,7 +75,21 @@ public class TourBusMassacre_CA1 {
                 }
                 case 4: {
                     s("Deleting bus from list...\n");
-                    deleteBus(in, model); //uses the delete method to delete a bus using the BusID
+
+                    s("Please enter the ID of the Bus you would like to delete: ");
+
+                   // deleteBus(in, model); //uses the delete method to delete a bus using the BusID
+                    BusGateway busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
+                    try {
+                        if (busGateway.removeBus(in.nextInt())) {
+                            s("Bus removed successfully");
+                        }
+                        else {
+                            s("Incorrect Bus ID");
+                        }
+                    } catch (SQLException e) {
+
+                    }
                 }
                 case 5: {
                     s("Exiting....\n");
@@ -89,7 +103,7 @@ public class TourBusMassacre_CA1 {
     private static Buses readBuses(Scanner in) {//Creating a bus in the main method
         String regNum, busMake, busModel; //needs a string of reg, make, model datebought and next service
         //int busID;//BusID added for ease of deletion(hopefully)
-//        int garageID;
+        int garageID;
         double engineSize; //Engine size needed
         Date dateBought = null, nextService = null;
 
@@ -116,7 +130,7 @@ public class TourBusMassacre_CA1 {
 
         } catch (ParseException e) {
             //e.printStackTrace();
-            System.err.println("Invalid date format: "+ e.getMessage());
+            System.err.println("Invalid date format: " + e.getMessage());
             readBuses(in);
         }
 
@@ -124,11 +138,11 @@ public class TourBusMassacre_CA1 {
         engineSize = in.nextDouble();
 
 
-//        s("Enter the Garage ID the Bus is based: ");
-//        garageID = in.nextInt();
-//        s("\n");
+        s("Enter the Garage ID the Bus is based: ");
+        garageID = in.nextInt();
+        s("\n");
 
-        Buses b = new Buses(regNum, busMake, busModel, engineSize, dateBought, nextService);//Adds bus to ArrayList
+        Buses b = new Buses(regNum, busMake, busModel, engineSize, dateBought, nextService, garageID);//Adds bus to ArrayList
         return b;
     }
 

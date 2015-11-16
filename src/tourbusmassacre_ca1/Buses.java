@@ -18,7 +18,7 @@ public class Buses {
     private double engSize;
     private Date dateBought;
     private Date nextService;
-//    private int garageID;
+    private int garageID;
 
 
     //Default Constructor
@@ -27,7 +27,7 @@ public class Buses {
     }
 
     //Constructor with all the parameters that make up the Object
-    public Buses(String regNum, String busMake, String busModel, double engSize, Date dateBought, Date nextService) {
+    public Buses(String regNum, String busMake, String busModel, double engSize, Date dateBought, Date nextService, int garageID) {
 
         //this.busID = busID;
         this.regNum = regNum;
@@ -36,16 +36,17 @@ public class Buses {
         this.engSize = engSize;
         this.dateBought = dateBought;
         this.nextService = nextService;
+        this.garageID = garageID;
     }
 
 
-//    public int getGarageID() {
-//        return garageID;
-//    }
-//
-//    public void setGarageID(int garageID) {
-//        this.garageID = garageID;
-//    }
+    public int getGarageID() {
+        return garageID;
+    }
+
+    public void setGarageID(int garageID) {
+        this.garageID = garageID;
+    }
 
     /**
      * @return the busID

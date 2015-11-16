@@ -8,13 +8,14 @@ public class BusGateway {
 
     //Should match the column names in your DB
     private static final String TABLE_NAME = "Bus";
+    private static final String COLUMN_ID = "busID";
     private static final String COLUMN_REG = "regNum";
     private static final String COLUMN_MAKE = "busMake";
     private static final String COLUMN_MODEL = "busModel";
     private static final String COLUMN_SIZE = "engineSize";
     private static final String COLUMN_BOUGHT = "dateBought";
     private static final String COLUMN_SERVICE = "dateNextService";
-//    private static final String COLUMN_GARAGE = "garageID";
+    private static final String COLUMN_GARAGE = "garageID";
 
     private Connection gConnection;
 
@@ -44,8 +45,9 @@ public class BusGateway {
                 COLUMN_MODEL + ", " +
                 COLUMN_SIZE + ", " +
                 COLUMN_BOUGHT + ", " +
-                COLUMN_SERVICE +
-                ") VALUES (?,?,?,?,?,?)";
+                COLUMN_SERVICE + ", " +
+                COLUMN_GARAGE +
+                ") VALUES (?,?,?,?,?,?,?)";
 
 
 
@@ -57,7 +59,7 @@ public class BusGateway {
             stmt.setDouble(4, bus.getEngSize());
             stmt.setDate(5, new Date(bus.getDateBought().getTime())); //Java date format needs to Changed to the same format as SQL
             stmt.setDate(6, new Date(bus.getNextService().getTime()));
-//            stmt.setInt(7, bus.getGarageID());
+            stmt.setInt(7, bus.getGarageID());
 
             numRowsAffected = stmt.executeUpdate();//Update the table
 
@@ -92,5 +94,30 @@ public class BusGateway {
     }
 
 
+    public boolean removeBus(int busID) throws SQLException {
 
+        String query; //SQL Query
+        PreparedStatement stmt; //Statement to update the table
+        int numRowsAffected = 0;
+
+        query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?"; //Deleting using the SQL query
+
+        stmt = gConnection.prepareStatement(query);
+        stmt.setInt(1, busID);
+
+        numRowsAffected = stmt.executeUpdate();
+
+        return (numRowsAffected == 1);
+
+
+    }
+
+    public boolean updateBus(Buses buses) throws SQLException{
+
+        String query;
+        PreparedStatement stmt;
+
+        int numRowsAffected = 0;
+
+    }
 }
