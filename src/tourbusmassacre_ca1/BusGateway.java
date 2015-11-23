@@ -1,6 +1,10 @@
 package tourbusmassacre_ca1;
 
 import java.sql.*;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by rorypb on 09/11/2015.
  */
@@ -119,5 +123,82 @@ public class BusGateway {
 
         int numRowsAffected = 0;
 
+        // the required SQL INSERT statement with place holders for the values to be inserted into the database
+        query = "UPDATE " + TABLE_NAME + " SET " +
+        COLUMN_REG + " = ?, " +
+        COLUMN_MAKE + " = ?, " +
+        COLUMN_MODEL + " = ?, " +
+        COLUMN_SIZE + " = ?, " +
+        COLUMN_BOUGHT + " = ?, " +
+        COLUMN_SERVICE + " = ?, " +
+        COLUMN_GARAGE + " = ?, ";
+
+        stmt = gConnection.prepareStatement(query);
+        stmt.setString(1, buses.getRegNum());
+        stmt.setString(2, buses.getBusMake());
+        stmt.setString(3, buses.getBusModel());
+        stmt.setDouble(4, buses.getEngSize());
+        stmt.setDate(5, new Date(buses.getDateBought().getTime()));
+        stmt.setDate(6, new Date((buses.getNextService().getTime())));
+        stmt.setInt(7, buses.getGarageID());
+
+        return (numRowsAffected ==1);
+
+
+
+
+
     }
+
+    public ArrayList<Buses> viewBus() throws SQLException {
+
+        String query; //SQL query goes in the string
+        Statement stmt; //Used for executing SQL
+
+        ResultSet resultSet; //Represeents the result of SQL query
+        ArrayList<Buses> buses; //Arraylist containing the bus objects
+
+        //Parameters to create a new bus
+        String regNum;
+        String busMake;
+        String busModel;
+        double engineSize;
+        int busID;
+        int garageID;
+        Date dateBought = null;
+        Date nextService = null;
+
+        //Object created in result of query
+        Buses buses1;
+
+        query = "SELECT * FROM " + TABLE_NAME; //SQL select statement
+        stmt = this.gConnection.createStatement();
+        resultSet = stmt.executeQuery(query);
+
+        //New empty array list for the extracted date to be input into to
+        buses = new ArrayList<Buses>();
+        while (resultSet.next()){
+            busID = resultSet.getInt(COLUMN_ID);
+            regNum = resultSet.getString(COLUMN_REG);
+            busMake = resultSet.getString(COLUMN_MAKE);
+            busModel = resultSet.getString(COLUMN_MODEL);
+            engineSize = resultSet.getDouble(COLUMN_SIZE);
+            dateBought = resultSet.getDate(COLUMN_BOUGHT);
+            nextService = resultSet.getDate(COLUMN_SERVICE);
+            garageID = resultSet.getInt(COLUMN_GARAGE);
+//            if (resultSet.wasNull()){
+//                garageID = -1;
+//            }
+
+            buses1 = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService, garageID);
+            buses.add(buses1);
+
+
+        }
+        return buses;
+
+
+
+    }
+
 }

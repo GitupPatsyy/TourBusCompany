@@ -5,13 +5,19 @@
  */
 package tourbusmassacre_ca1;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author rorypb
  */
 public class Model {
+
+    private ArrayList<Buses> buses;
+    private BusGateway busGateway;
 
     private static Model instance = null; //Set instance value
 
@@ -23,21 +29,37 @@ public class Model {
         return instance;
     }
 
-    private List<Buses> buses; //Creates private array buses from Buses class
+    //Creates private array buses from Buses class
 
     private Model() {
-        //Array List for Buses
-        this.buses = new ArrayList<Buses>();
-        //Adding a Bus for Hardcode Test
-        //this.buses.add(new Buses(1, "07TN9999", "Mercedes", "Vito", 2.5, "14/01/2015", "22/12/2015"));
+        //For viewing in the database
+        busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
+        try {
+            this.buses = busGateway.viewBus();
+        } catch (SQLException e) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, e);
+        }
 
-        //this.buses.add(new Buses(2, "141D1234", "Ford", "Bus", 2.2, "01/05/2014", "01/04/2016"));
+
     }
 
-    public List<Buses> getBuses() //Gets buses from Buses Class
+    public ArrayList<Buses> viewBus(){ //Gets buses from Buses Class
+
+
+    try
+
     {
-        return new ArrayList<Buses>(this.buses);
+        this.buses = busGateway.viewBus();
     }
+
+    catch(SQLException e)
+
+    {
+
+    }
+        return this.buses;
+    }
+
 
     //Method to Add Bus to List
 
@@ -45,14 +67,8 @@ public class Model {
         this.buses.add(b);
     }
 
-    public boolean removeBus(Buses b) {
-        return this.buses.remove(b);
-    }
 
-//    public Buses updateBus(Buses b){
-//        return this.buses.set(b);
-//    }
-
+    //Method to view bus by ID
     public Buses findBusByID(int BusID) { //Method to find a Bus by BusID
         Buses b = new Buses(); //creating a new bus
         int i = 0;

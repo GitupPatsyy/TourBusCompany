@@ -5,6 +5,7 @@
  */
 package tourbusmassacre_ca1;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -71,25 +72,36 @@ public class TourBusMassacre_CA1 {
                 case 3: {
                     s("Updating bus...\n");
                     s("Please select the ID of the Bus to Update: ");
+                    BusGateway busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
 
+                    try {
+                        if (busGateway.updateBus(model.findBusByID(in.nextInt()))) {
+
+                        } else {
+                            s("Incorrect bus ID");
+                        }
+                    } catch (SQLException e) {
+
+                    }
+                    break;
                 }
                 case 4: {
                     s("Deleting bus from list...\n");
 
                     s("Please enter the ID of the Bus you would like to delete: ");
 
-                   // deleteBus(in, model); //uses the delete method to delete a bus using the BusID
+                    // deleteBus(in, model); //uses the delete method to delete a bus using the BusID
                     BusGateway busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
                     try {
                         if (busGateway.removeBus(in.nextInt())) {
                             s("Bus removed successfully");
-                        }
-                        else {
+                        } else {
                             s("Incorrect Bus ID");
                         }
                     } catch (SQLException e) {
 
                     }
+                    break;
                 }
                 case 5: {
                     s("Exiting....\n");
@@ -117,7 +129,7 @@ public class TourBusMassacre_CA1 {
         s("Enter bus model: ");
         busModel = in.next();
 
-        s("Enter date bought (yyyy/MM/dd) : ");
+        s("Enter date bought (yyyy-MM-dd) : ");
         String boughtDate = in.next();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         try {
@@ -148,47 +160,10 @@ public class TourBusMassacre_CA1 {
 
     private static void viewBus(Model model) {
 //Creates method to view bus
-        List<Buses> bus = model.getBuses();//Lists buses in the arrary
-        for (Buses bs : bus) {
-            //for each loop
-            s("Bus ID: " + bs.getBusID() + "\n");//RIGHT NOW prints out my toString method which is all the bus information that the user enters
-            s("================================================================");
+        for (Buses b : model.viewBus()) {
+            s(b.toString());
         }
+
     }
 
-//    private static void updateBus(Scanner in, Model m){
-//        s("Enter the ID of the Bus you would like to Update: ");
-//        int busID = Integer.parseInt(in.nextInt());
-//
-//        Buses b;
-//
-//        b = m.findBusByID(busID);
-//        if(b != null) {
-//            if (m.updateBus(b)){
-//                Buses b = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService);
-//            }
-//        }
-//
-//    }
-
-    private static void deleteBus(Scanner in, Model m) {
-        s("Enter the BusID of the bus you would like to delete: ");
-        int busID = Integer.parseInt(in.next()); //Search for Bus to delete
-
-        Buses b;
-
-        b = m.findBusByID(busID);
-        if (b != null) {
-            if (m.removeBus(b)) {
-                s("Bus removed");
-                s("================================================================\n");
-            } else {
-                s("Bus removal failed");
-                s("================================================================\n");
-            }
-        } else {
-            s("Bus not found");
-            s("================================================================\n");
-        }
-    }
 }
