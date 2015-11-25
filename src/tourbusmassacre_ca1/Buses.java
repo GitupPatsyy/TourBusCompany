@@ -38,6 +38,8 @@ public class Buses {
         this.nextService = nextService;
         this.garageID = garageID;
     }
+
+    //Second constructor to allow the view method to work
     public Buses(int busID, String regNum, String busMake, String busModel, double engSize, Date dateBought, Date nextService, int garageID) {
 
         this.busID = busID;
@@ -50,7 +52,7 @@ public class Buses {
         this.garageID = garageID;
     }
 
-
+    //Getters and Setters
     public int getGarageID() {
         return garageID;
     }
@@ -158,6 +160,7 @@ public class Buses {
         this.nextService = nextService;
     }
 
+    //ToString Method to output all the Data about the bus in one string
     public String toString() {
         return "BusID: " + busID +
                 "\nRegistration Number: " + regNum +

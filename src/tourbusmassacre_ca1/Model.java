@@ -36,50 +36,44 @@ public class Model {
     private Model() {
         //For viewing in the database
 
-        busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
+        busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());//Establishes connection to DB and busGateway
         try {
-            this.buses = busGateway.viewBus();
+            this.buses = busGateway.viewBus();//Views arraylist from BusGatway
         } catch (SQLException e) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, e);
         }
 
 
     }
+
     //Method to view bus
-    public ArrayList<Buses> viewBus(){ //Gets buses from Buses Class
+    public ArrayList<Buses> viewBus() { //Gets buses from Buses Class
 
 
-    try
+        try {
+            this.buses = busGateway.viewBus();//Instead of calling the busGateway in my main method
+        } catch (SQLException e) {
 
-    {
-        this.buses = busGateway.viewBus();
-    }
-
-    catch(SQLException e)
-
-    {
-
-    }
-        return this.buses;
+        }
+        return this.buses;//returns the Arraylist of buses
     }
 
     //Method to edit bus
-    public boolean updateBuses(Buses b){
+    public boolean updateBuses(Buses b) {
         boolean updated = false;
 
         try {
-            updated = this.busGateway.updateBus(b);
-        }
-        catch (SQLException e) {
+            updated = this.busGateway.updateBus(b);//For establishing DB connection
+        } catch (SQLException e) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, e);
         }
-        return updated;
+        return updated;//return the boolean
     }
 
 
     //Method to Add Bus to List
 
-    public void addBus(Buses b) {
+    public void addBus(Buses b) {//Actual add method is in the Main method
         this.buses.add(b);
     }
 

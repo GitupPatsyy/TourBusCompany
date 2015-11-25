@@ -31,7 +31,7 @@ public class BusGateway {
     //empty bus obect for when entering in values
     public boolean insertBus(Buses bus) throws SQLException {
 
-        boolean success = true;
+        boolean success = true; //set so success is defaulted to true
 
         String query; //Query for SQL commands to communicate with DB
         PreparedStatement stmt = null; //Statement for executing the SQL query
@@ -76,7 +76,7 @@ public class BusGateway {
                 bus.setBusID(id);//Setting id
             } else {
                 System.err.println("No rows changed");
-                success = false;
+                success = false; //Change success if no rows are changed
             }
         } catch (SQLException e) {
             System.err.println(e.getMessage());
@@ -87,7 +87,7 @@ public class BusGateway {
             }
             if (stmt != null) { //close statement
                 stmt.close();
-
+            //Goo practivce to close kets
             }
         }
         return success; //return the bus if created or null if issue
@@ -104,22 +104,22 @@ public class BusGateway {
 
         query = "DELETE FROM " + TABLE_NAME + " WHERE " + COLUMN_ID + " = ?"; //Deleting using the SQL query
 
-        stmt = gConnection.prepareStatement(query);
+        stmt = gConnection.prepareStatement(query);//Puts the SQL Query into the statement
         stmt.setInt(1, busID);
 
-        numRowsAffected = stmt.executeUpdate();
+        numRowsAffected = stmt.executeUpdate();//Actually executes the SQL statement
 
-        return (numRowsAffected == 1);
+        return (numRowsAffected == 1); //Return that rows are changed
 
 
     }
 
     public boolean updateBus(Buses buses) throws SQLException {
 
-        String query;
-        PreparedStatement stmt;
+        String query;//SQL statemtn
+        PreparedStatement stmt;//Stmt to update the table
 
-        int numRowsAffected = 0;
+        int numRowsAffected = 0; //Variable to change when rows are affected
 
         // the required SQL INSERT statement with place holders for the values to be inserted into the database
         query = "UPDATE " + TABLE_NAME + " SET " +
@@ -140,9 +140,11 @@ public class BusGateway {
         stmt.setDate(5, new Date(buses.getDateBought().getTime()));
         stmt.setDate(6, new Date((buses.getNextService().getTime())));
         stmt.setInt(7, buses.getGarageID());
-        stmt.setInt(8, buses.getBusID());
+        stmt.setInt(8, buses.getBusID());//BusID needs to be there to allow the update to happen. I had this left out initially
 
-        return (numRowsAffected == 1);
+        numRowsAffected = stmt.executeUpdate();//Execute the update statement
+
+        return (numRowsAffected == 1); //Return that the rows have been affected
 
 
     }
@@ -188,11 +190,11 @@ public class BusGateway {
 //            }
 
             buses1 = new Buses(busID, regNum, busMake, busModel, engineSize, dateBought, nextService, garageID);
-            buses.add(buses1);
+            buses.add(buses1);//Adds the buses to the empty arrrylist
 
 
         }
-        return buses;
+        return buses; //returns buses
 
 
     }

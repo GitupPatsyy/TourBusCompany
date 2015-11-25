@@ -28,11 +28,11 @@ public class DatabaseConnection {
     private static final String PASSWORD = "root";
     private static final String CONN_STRING =
             "jdbc:mysql://localhost:8889/CA1-TourBusMassacre";
-
+    //Connection to local server
 
     //==================================
 
-    private static DatabaseConnection instance = null;
+    private static DatabaseConnection instance = null; //Connections to start as null(closed)
     private Connection dbConnection = null;
 
     private DatabaseConnection() {//Default empty constructor
@@ -41,7 +41,7 @@ public class DatabaseConnection {
     }
 
     public static DatabaseConnection getInstance() {//Instantiating the connection
-        if (instance == null) { //Instance set to null
+        if (instance == null) { //if the instance is null it will start a new db connection
             instance = new DatabaseConnection(); //new DB connection from instance
 
         }
@@ -55,7 +55,7 @@ public class DatabaseConnection {
         boolean connected = true;
         try { //when connection is open
             dbConnection = DriverManager.getConnection(CONN_STRING, USERNAME, PASSWORD);
-            System.out.println("CONNECTED");
+            System.out.println("CONNECTED");//when connected is true it will print out CONNECTED
 
         } catch (SQLException e) { //when connection is not open
             connected = false;
@@ -65,24 +65,24 @@ public class DatabaseConnection {
 
     }
 
-    public Connection getDbConnection() {
-        Connection connection = null;
-        if (dbConnection == null) {
+    public Connection getDbConnection() {//To get the connection in other classes
+        Connection connection = null; //Initialise to null
+        if (dbConnection == null) { //If the connection is null
             if (openConnection()) {
-                connection = dbConnection;
+                connection = dbConnection; //Set the connectinon to Open
             }
         } else {
-            connection = dbConnection;
+            connection = dbConnection;//Else keep it as null
 
         }
-        return connection;
+        return connection; //Return an open or closed connection
     }
 
     public void closeConnection() { //close DB connection
         try {
-            if (dbConnection != null) {
-                dbConnection.close();
-                dbConnection = null;
+            if (dbConnection != null) { //If the DB connection is not null
+                dbConnection.close();//Close the connection
+                dbConnection = null;//Good practice to close the connection when finished
             }
         } catch (SQLException e) {
 
