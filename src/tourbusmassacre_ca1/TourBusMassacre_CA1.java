@@ -30,6 +30,8 @@ public class TourBusMassacre_CA1 {
 
     public static void main(String[] args) { //Main Method
 
+        Model busList = Model.getInstance();
+
         Buses b = null;
 
         Model model = Model.getInstance();
@@ -71,19 +73,10 @@ public class TourBusMassacre_CA1 {
                 }
                 case 3: {
                     s("Updating bus...\n");
-                    s("Please select the ID of the Bus to Update: ");
-                    BusGateway busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
-
-                    try {
-                        if (busGateway.updateBus(model.findBusByID(in.nextInt()))) {
-
-                        } else {
-                            s("Incorrect bus ID");
-                        }
-                    } catch (SQLException e) {
-
-                    }
+                    editBuses(in, model);
                     break;
+
+
                 }
                 case 4: {
                     s("Deleting bus from list...\n");
@@ -158,10 +151,95 @@ public class TourBusMassacre_CA1 {
         return b;
     }
 
+    private static String getString(Scanner in, String prompt) {
+        s(prompt);
+        return in.nextLine();
+    }
+
+    private static void editBuses(Scanner in, Model m) {
+        System.out.print("Enter the Bus ID of the Bus you would like to update: ");
+        int busID = in.nextInt();
+        Buses b;
+
+        b = m.findBusByID(busID);
+        if (b != null) {
+            updateBusDeets(in, b);
+            if (m.updateBuses(b)) {
+                System.out.println("Bus updated");
+            }
+            else {
+                System.out.println("Bus not updated");
+            }
+        }
+        else {
+            System.out.println("Bus not found");
+        }
+    }
+
+    private static void updateBusDeets(Scanner in, Buses b) {
+        String regNum, busMake, busModel;
+        int garageID;
+        double engSize;
+        Date nextService;
+        Date purchaseDate;
+
+        //Strings For the date and the double and the int
+        String engUpdate, garageUpdate, serviceUpdate;
+
+        regNum = getString(in, "");
+        regNum = getString(in, "Enter new Registration Number: [" + b.getRegNum() + "]");
+        busMake = getString(in, "Enter new Bus Make: [" + b.getBusMake() + "]");
+        busModel = getString(in, "Enter new Bus Model: [" + b.getBusModel() + "]");
+        engUpdate = getString(in, "Enter new Engine Size: [" + b.getEngSize()+ "]");
+        serviceUpdate = getString(in, "Enter new Service Date(yyyy-mm-dd): [" + b.getNextService() + "]");
+        garageUpdate = getString(in, "Enter new Garage ID to store a bus: [" + b.getGarageID() + "]");
+
+
+        if (regNum.length() != 0) {//IF the reg number is not empty it will assign the value from the new input into the reg number
+            b.setRegNum(regNum);
+
+        }
+        if (busMake.length() != 0) {//If the bus make is not empty it will set the busmake to its new value
+            b.setBusMake(busMake);
+        }
+        if (busModel.length() != 0) {
+            b.setBusModel(busModel);
+        }
+        if (engUpdate.length() != 0) {
+            engSize = Double.parseDouble(engUpdate);
+            b.setEngSize(engSize);
+        }
+        if (serviceUpdate.length() != 0) {
+            //Takes the string that was input and parses it to a date
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            String newDate = serviceUpdate;
+
+            try {
+
+                Date date = df.parse(newDate);
+                b.setNextService(date);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if(garageUpdate.length()!=0)
+
+        {
+            garageID = Integer.parseInt(garageUpdate);
+            b.setGarageID(garageID);
+        }
+
+
+}
+
+
     private static void viewBus(Model model) {
 //Creates method to view bus
-        for (Buses b : model.viewBus()) {
-            s(b.toString());
+        for (Buses b1 : model.viewBus()) {
+            s(b1.toString());
         }
 
     }

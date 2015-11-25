@@ -5,6 +5,8 @@
  */
 package tourbusmassacre_ca1;
 
+import com.mysql.jdbc.Connection;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +35,7 @@ public class Model {
 
     private Model() {
         //For viewing in the database
+
         busGateway = new BusGateway(DatabaseConnection.getInstance().getDbConnection());
         try {
             this.buses = busGateway.viewBus();
@@ -42,7 +45,7 @@ public class Model {
 
 
     }
-
+    //Method to view bus
     public ArrayList<Buses> viewBus(){ //Gets buses from Buses Class
 
 
@@ -58,6 +61,19 @@ public class Model {
 
     }
         return this.buses;
+    }
+
+    //Method to edit bus
+    public boolean updateBuses(Buses b){
+        boolean updated = false;
+
+        try {
+            updated = this.busGateway.updateBus(b);
+        }
+        catch (SQLException e) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return updated;
     }
 
 

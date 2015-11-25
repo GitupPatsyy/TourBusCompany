@@ -54,7 +54,6 @@ public class BusGateway {
                 ") VALUES (?,?,?,?,?,?,?)";
 
 
-
         try {
             stmt = gConnection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, bus.getRegNum());
@@ -75,8 +74,7 @@ public class BusGateway {
                 id = keys.getInt(1);
 
                 bus.setBusID(id);//Setting id
-            }
-            else {
+            } else {
                 System.err.println("No rows changed");
                 success = false;
             }
@@ -84,10 +82,10 @@ public class BusGateway {
             System.err.println(e.getMessage());
             success = false;
         } finally { //close keys
-            if(keys != null){
+            if (keys != null) {
                 keys.close();
             }
-            if(stmt != null){ //close statement
+            if (stmt != null) { //close statement
                 stmt.close();
 
             }
@@ -116,7 +114,7 @@ public class BusGateway {
 
     }
 
-    public boolean updateBus(Buses buses) throws SQLException{
+    public boolean updateBus(Buses buses) throws SQLException {
 
         String query;
         PreparedStatement stmt;
@@ -125,13 +123,14 @@ public class BusGateway {
 
         // the required SQL INSERT statement with place holders for the values to be inserted into the database
         query = "UPDATE " + TABLE_NAME + " SET " +
-        COLUMN_REG + " = ?, " +
-        COLUMN_MAKE + " = ?, " +
-        COLUMN_MODEL + " = ?, " +
-        COLUMN_SIZE + " = ?, " +
-        COLUMN_BOUGHT + " = ?, " +
-        COLUMN_SERVICE + " = ?, " +
-        COLUMN_GARAGE + " = ?, ";
+                COLUMN_REG + " = ?, " +
+                COLUMN_MAKE + " = ?, " +
+                COLUMN_MODEL + " = ?, " +
+                COLUMN_SIZE + " = ?, " +
+                COLUMN_BOUGHT + " = ?, " +
+                COLUMN_SERVICE + " = ?, " +
+                COLUMN_GARAGE + " = ? " +
+                " WHERE " + COLUMN_ID + " = ?" ;
 
         stmt = gConnection.prepareStatement(query);
         stmt.setString(1, buses.getRegNum());
@@ -141,11 +140,9 @@ public class BusGateway {
         stmt.setDate(5, new Date(buses.getDateBought().getTime()));
         stmt.setDate(6, new Date((buses.getNextService().getTime())));
         stmt.setInt(7, buses.getGarageID());
+        stmt.setInt(8, buses.getBusID());
 
-        return (numRowsAffected ==1);
-
-
-
+        return (numRowsAffected == 1);
 
 
     }
@@ -177,7 +174,7 @@ public class BusGateway {
 
         //New empty array list for the extracted date to be input into to
         buses = new ArrayList<Buses>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             busID = resultSet.getInt(COLUMN_ID);
             regNum = resultSet.getString(COLUMN_REG);
             busMake = resultSet.getString(COLUMN_MAKE);
@@ -196,7 +193,6 @@ public class BusGateway {
 
         }
         return buses;
-
 
 
     }
